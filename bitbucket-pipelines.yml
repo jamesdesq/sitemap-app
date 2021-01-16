@@ -5,5 +5,7 @@ pipelines:
     master:
       - step:
           name: Build and deploy
-          script: 
+          script:
+            - git clone https://github.com/aws/aws-elastic-beanstalk-cli-setup.git
+            - ./aws-elastic-beanstalk-cli-setup/scripts/bundled_installer
             - eb deploy
