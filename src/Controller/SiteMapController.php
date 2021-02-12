@@ -4,6 +4,7 @@
 namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpClient\HttpClient;
 
 class SiteMapController extends AbstractController {
 
@@ -14,25 +15,22 @@ class SiteMapController extends AbstractController {
 
   public function sitemap() {
 
-    $slug = 'foo';
+    $url = 'https://cdn.contentful.com/spaces/plxxptld3t56/environments/master/entries?access_token=ppzAQqtPhUDeTP-Pa00NLpk1FNKxECmXHaMqluuf-Gk&content_type=story';
 
-    $answers = ['foo'];
+    $client = HttpClient::create();
+    $response = $client->request('GET', $url);
+    $statusCode = $response->getStatusCode();
+    $content = $response->toArray();
 
-//    $response = $this->render("MarketplaceBundle:sitemap:sitemap.xml.twig", array(
-//      'urls' => $urls
-//    ));
-//    $response->headers->add(array('Content-Type' => 'application/xml'));
-//    return $response;
+    $urls = [];
+    foreach($content['items'] as $item) {
+      $urls[] = $item['fields']['url'];
+    }
 
     $response = $this->render('sitemap.xml.twig', [
-      'question' => ucwords(str_replace('-', ' ', $slug)),
-      'answers' => $answers,
+      'items' => $urls,
     ]);
-
-//    $response->headers->set('Content-Type', 'text/xml');
     $response->headers->add(array('Content-Type' => 'application/xml'));
-
-
     return $response;
   }
 }
