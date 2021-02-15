@@ -7,6 +7,7 @@ pipelines:
           name: Build and deploy
           script:
             - apk update && apk add bash && apk add git
-            - apk add python-dev && apk add python-pip
+            - apk add python-dev
+            - apk add --update py-pip
             - pip install awsebcli --ignore-installed setuptools --upgrade
             - eb --version
