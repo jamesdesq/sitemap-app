@@ -8,6 +8,6 @@ pipelines:
           script:
             - apk update && apk add bash && apk add git
             - apk add python-dev
-            - apk add --update py-pip
+            - apk add --update py3-pip
             - pip install awsebcli --ignore-installed setuptools --upgrade
             - eb --version
