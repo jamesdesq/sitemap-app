@@ -7,7 +7,6 @@ pipelines:
           name: Build and deploy
           script:
             - apk update && apk add bash && apk add git
-            - git status
-            - git clone https://github.com/aws/aws-elastic-beanstalk-cli-setup.git
-            - ./aws-elastic-beanstalk-cli-setup/scripts/bundled_installer
-            - eb deploy
+            - apk add python-dev && apk add python-pip
+            - pip install awsebcli --ignore-installed setuptools --upgrade
+            - eb --version
