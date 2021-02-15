@@ -10,5 +10,5 @@ pipelines:
             - apk add python3
             - python --version
             - apk add --update py3-pip
-            - pip install awsebcli --ignore-installed setuptools --upgrade
+            - pip3 install awsebcli --ignore-installed setuptools --upgrade
             - eb --version
