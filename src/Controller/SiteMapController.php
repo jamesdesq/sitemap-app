@@ -18,7 +18,7 @@ class SiteMapController extends AbstractController {
 
     $this->environment = $environment;
 
-    if ($environment === 'PROD') {
+    if ($environment === 'prod') {
       $this->space = getenv('CONTENTFUL_SPACE');
       $this->accessToken = getenv('CONTENTFUL_ACCESS_TOKEN');
     }
