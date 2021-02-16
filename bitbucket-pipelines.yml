@@ -4,12 +4,16 @@ pipelines:
   branches:
     master:
       - step:
-          name: Build and deploy
+          name: Zip it up
           script:
             - apk update && apk add bash && apk add git
-            - apk add build-essential zlib1g-dev libssl-dev libncurses-dev libffi-dev libsqlite3-dev libreadline-dev libbz2-de
-            - apk add python3
-            - python --version
-            - apk add --update py3-pip
-            - pip3 install awsebcli --ignore-installed setuptools --upgrade
-            - eb --version
+            - zip -r application.zip . 
+          name: Put it out
+           - pipe: atlassian/aws-elasticbeanstalk-deploy:0.5.0
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: "eu-west-2"
+                APPLICATION_NAME: "sitemap-app"
+                ENVIRONMENT_NAME: 'sitemap-app-dev'
+                ZIP_FILE: "application.zip"
