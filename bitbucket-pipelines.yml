@@ -8,9 +8,11 @@ pipelines:
           script:
             - apk update && apk add bash && apk add git
             - zip -r application.zip . 
+      - step:
           name: Put it out
-           - pipe: atlassian/aws-elasticbeanstalk-deploy:0.5.0
-              variables:
+          script:
+          - pipe: atlassian/aws-elasticbeanstalk-deploy:0.5.0
+            variables:
                 AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
                 AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
                 AWS_DEFAULT_REGION: "eu-west-2"
