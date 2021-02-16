@@ -1,4 +1,4 @@
-image: jamesdesq/homepage_builder:v0.1
+image: atlassian/default-image:2
 
 pipelines:
   branches:
@@ -6,14 +6,12 @@ pipelines:
       - step:
           name: Zip it up
           script:
-            - apk update && apk add bash && apk add git
-            - apk add zip
-            - zip -r application.zip . 
+            - zip -r application.zip .
+          artifacts: 
+            - application.zip 
       - step:
           name: Put it out
           script:
-            - ls -al
-            - zip -r application.zip . 
             - pipe: atlassian/aws-elasticbeanstalk-deploy:0.5.0
               variables:
                 AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
