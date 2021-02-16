@@ -8,18 +8,34 @@ use Symfony\Component\HttpClient\HttpClient;
 
 class SiteMapController extends AbstractController {
 
-  public function homepage() {
+  private $space;
 
-    return new Response('It\'s for generating sitemaps');
+  private $accessToken;
+
+  private $environment;
+
+  public function __construct(string $environment, string $space, string $accessToken) {
+
+    $this->environment = $environment;
+
+    if ($environment === 'PROD') {
+      $this->space = getenv('CONTENTFUL_SPACE');
+      $this->accessToken = getenv('CONTENTFUL_ACCESS_TOKEN');
+    }
+    else {
+      $this->space = $space;
+      $this->accessToken = $accessToken;
+    }
+  }
+
+  public function homepage() {
+    return new Response("Environment: $this->environment");
   }
 
   public function sitemap() {
-
-    $url = 'https://cdn.contentful.com/spaces/plxxptld3t56/environments/master/entries?access_token=ppzAQqtPhUDeTP-Pa00NLpk1FNKxECmXHaMqluuf-Gk&content_type=story';
-
+    $url = "https://cdn.contentful.com/spaces/$this->space/environments/master/entries?access_token=$this->accessToken&content_type=story";
     $client = HttpClient::create();
     $response = $client->request('GET', $url);
-    $statusCode = $response->getStatusCode();
     $content = $response->toArray();
 
     $urls = [];

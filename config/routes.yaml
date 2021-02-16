@@ -1,6 +1,6 @@
 index:
-    path: /
-    controller: App\Controller\SiteMapController::homepage
+  path: /
+  controller: App\Controller\SiteMapController::homepage
 
 
 sitemaps:
