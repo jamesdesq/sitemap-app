@@ -7,6 +7,7 @@ pipelines:
           name: Zip it up
           script:
             - apk update && apk add bash && apk add git
+            - apk add zip
             - zip -r application.zip . 
       - step:
           name: Put it out
