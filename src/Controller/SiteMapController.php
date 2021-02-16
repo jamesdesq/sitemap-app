@@ -29,7 +29,7 @@ class SiteMapController extends AbstractController {
   }
 
   public function homepage() {
-    return new Response("Environment: $this->environment");
+    return new Response("Environment: $this->environment. Space: $this->space" );
   }
 
   public function sitemap() {
