@@ -20,3 +20,16 @@ pipelines:
                 APPLICATION_NAME: "sitemap-app"
                 ENVIRONMENT_NAME: 'sitemap-app-dev'
                 ZIP_FILE: "application.zip"
+      - step:
+          name: Push to git
+          script:
+            - rm application.zip
+            - git checkout -b feature/publish-to-github
+            - git remote add sync git@github.com:jamesdesq/sitemap-app.git
+            - rm .env
+            - rm .env.prod
+            - git status
+            - git add . 
+            - git commit -m "Syncing to Github" 
+            - git push sync feature/publish-to-github:master
+      
